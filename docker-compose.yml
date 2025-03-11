@@ -1,0 +1,45 @@
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_HOST=mysql
+      - REDIS_URL=redis://redis:6379
+    volumes:
+      - ./public:/app/public  # 添加这行，挂载静态文件目录
+    depends_on:
+      - mysql
+      - redis
+      - mosquitto
+
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: your_password
+      MYSQL_DATABASE: myapp
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql  # Add this line
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+
+  mosquitto:
+    image: eclipse-mosquitto
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - mosquitto_data:/mosquitto/data
+      - mosquitto_log:/mosquitto/log
+      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf
+
+volumes:
+  mysql_data:
+  mosquitto_data:
+  mosquitto_log:

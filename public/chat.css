@@ -1,0 +1,27 @@
+#messages {
+    height: 400px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+.system-message { 
+    color: #666; 
+}
+.chat-message { 
+    margin: 5px 0; 
+}
+.username { 
+    font-weight: bold; 
+}
+.input-area {
+    margin: 10px 0;
+}
+input {
+    padding: 5px;
+    margin-right: 5px;
+}
+button {
+    padding: 5px 10px;
+    cursor: pointer;
+}
